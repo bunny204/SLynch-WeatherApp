@@ -69,27 +69,6 @@
             </div>
             </div>
             <div class="weather-forecast" id="forecast">
-            <div class="rows">
-              <div class="col-2">
-                <div class="weather-forecast-date"
-                >
-                Tuesday
-              </div>
-                <img src=" http://openweathermap.org/img/wn/10d@2x.png" 
-                alt=""
-                width="42"
-                />
-                <div class="weather-forecast-temperatures">
-                  <span class="weather-forecast–temperature–max">
-                 18°  
-                </span>
-                <span class="weather-forecast-temperature-min">
-                 12° 
-                </span>
-                </div>
-                
-              </div>
-            </div>
             </div>
         </div>
         </div>
@@ -217,7 +196,6 @@
           minutes = `0${minutes}`;
         }
 
-        let dayIndex = date.getDay();
         let days = [
           "Sunday",
           "Monday",
@@ -227,11 +205,36 @@
           "Friday",
           "Saturday",
         ];
-        let day = days[dayIndex];
-
+        let day = days[date.getDay()];
         return `${day} ${hours}:${minutes}`;
       }
       
+      function displayForecast(){
+        let forecastElement=document.querySelector("#forecast");
+
+        let days = ["Tuesday","Wednesday", "Friday", "Saturday", "Sunday"];
+
+        let forecastHTML = `<div class="row">`;
+          days.forEach(function(day){
+              forecastHTML = forecastHTML + 
+              `
+              <div class="col-2">
+                <div class="weather-forecast-date">${day}</div>
+                <img src=" http://openweathermap.org/img/wn/10d@2x.png" 
+                alt=""
+                width="42"
+                />
+                <div class="weather-forecast-temperatures">
+                <span class="weather-forecast–temperature–max"> 18°</span>  
+                <span class="weather-forecast-temperature-min">12°</span>
+              </div>
+            </div>`
+        ;   
+          });
+
+        forecastHTML = forecastHTML + `</div>`;
+        forecastElement.innerHTML = forecastHTML;
+      }
 
       function displayWeatherCondition(response) {
         document.querySelector("#city").innerHTML = response.data.name;
@@ -300,6 +303,8 @@
       currentLocationButton.addEventListener("click", getCurrentLocation);
       let iconElement = document.querySelector("#icon");
       searchCity("Dallas");
+      displayForecast();
+
     </script>
     <script src="src/index.js"></script>
   </body>
